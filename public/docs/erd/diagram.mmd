@@ -1,0 +1,138 @@
+erDiagram
+    %% Project Database ERD
+
+    User {
+        bigint id PK
+        string name
+        string email
+        string password
+        string active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    TradeTerm {
+        bigint id PK
+        string name
+        string ordering
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    State {
+        bigint id PK
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    Staff {
+        bigint id PK
+        string user_id
+        string factory_id
+        string timezone
+        string full_name_english
+        string full_name_china
+        string phone
+        string wechat
+        string qq
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ShippingAddress {
+        bigint id PK
+        string customer_id
+        string factory_id
+        string address_to
+        string address_street1
+        string address_street2
+        string city_id
+        string state_id
+        string country_id
+        string postcode
+        boolean active
+        string is_default
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PaymentTerm {
+        bigint id PK
+        string name
+        string ordering
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    Factory {
+        bigint id PK
+        string name_english
+        string name_china
+        string phone_1
+        string phone_2
+        string email
+        string website
+        string address_to
+        string address_street1
+        string address_street2
+        string city_id
+        string state_id
+        string country_id
+        string address_postcode
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CustomerEmail {
+        bigint id PK
+        string customer_id
+        string name
+        string email
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    Customer {
+        bigint id PK
+        string user_id
+        string account_manager_user_id
+        string abn
+        string company_name
+        string contact_name
+        string phone_1
+        string phone_2
+        string website
+        string brand_label
+        string trade_term_id
+        string payment_term_id
+        string address_to
+        string address_street1
+        string address_street2
+        string city_id
+        string state_id
+        string country_id
+        string address_postcode
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    Country {
+        bigint id PK
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    City {
+        bigint id PK
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
