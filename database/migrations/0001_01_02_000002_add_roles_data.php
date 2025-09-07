@@ -10,6 +10,8 @@ class AddRolesData extends Migration
         PermissionRoleLib::resetPermissionsCache();
 
         echo "Adding roles data...\n";
+        PermissionRoleLib::addRole('developer');
+        echo "Added: developer \n";
         PermissionRoleLib::addRole('admin');
         echo "Added: admin \n";
         PermissionRoleLib::addRole('bookkeeper');

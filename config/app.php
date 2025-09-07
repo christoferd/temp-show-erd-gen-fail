@@ -1,5 +1,12 @@
 <?php
 
+use App\Filament\Resources\Addresses\AddressResource;
+use App\Filament\Resources\Cities\CityResource;
+use App\Filament\Resources\Countries\CountryResource;
+use App\Filament\Resources\Customers\CustomerResource;
+use App\Filament\Resources\Factories\FactoryResource;
+use App\Filament\Resources\States\StateResource;
+
 return [
 
     /*
@@ -122,5 +129,17 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    // Custom Configuration
+    // Added by Developer: Christofer De David, Mindflow.com.au
+
+    'nav_sort' => [
+        CustomerResource::class => 1,
+        FactoryResource::class => 2,
+        CityResource::class => 97,
+        StateResource::class => 98,
+        CountryResource::class => 99,
+        AddressResource::class => 99,
+    ]
 
 ];

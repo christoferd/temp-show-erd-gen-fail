@@ -26,10 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\City|null $city
- * @property-read \App\Models\Country|null $country
- * @property-read \App\Models\ShippingAddress|null $shippingAddress
- * @property-read \App\Models\State|null $state
+ * @property-read \App\Models\Address|null $address
  * @method static \Database\Factories\FactoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Factory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Factory newQuery()
@@ -53,7 +50,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Factory whereWebsite($value)
  * @mixin \Eloquent
  */
-class Factory extends Model
+class Factory extends ObjectiveModel
 {
     use HasFactory;
 
@@ -71,14 +68,8 @@ class Factory extends Model
         'phone_2',
         'email',
         'website',
-        'address_to',
-        'address_street1',
-        'address_street2',
-        'city_id',
-        'state_id',
-        'country_id',
-        'address_postcode',
-        'active',
+        'address_id',
+        'is_active',
     ];
 
     /**
@@ -87,41 +78,15 @@ class Factory extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'active' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
      * @return BelongsTo
      */
-    public function city(): BelongsTo
+    public function address(): BelongsTo
     {
-        return $this->belongsTo(City::class, 'city_id', 'id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function state(): BelongsTo
-    {
-        return $this->belongsTo(State::class, 'state_id', 'id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
-    }
-
-    /**
-     * Limited to one shipping address for the Factory model.
-     *
-     * @return HasOne
-     */
-    public function shippingAddress(): HasOne
-    {
-        return $this->hasOne(ShippingAddress::class, 'factory_id', 'id');
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
 }

@@ -15,14 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('factory_id')->nullable()->constrained('factory');
-            // - Store the user’s selection as an IANA timezone ID (e.g., "Asia/Shanghai", "America/New_York") in a nullable string column.
-            $table->string('timezone')->nullable()->default('Asia/Shanghai');
             $table->string('full_name_english')->nullable()->default('')->index();
             $table->string('full_name_china')->nullable()->default('')->index();
             $table->string('phone')->nullable()->default('')->index();
             $table->string('wechat')->nullable()->default('')->index();
             $table->string('qq')->nullable()->default('')->index();
-            $table->boolean('active')->default(true)->index();
+            $table->boolean('is_active')->default(true)->index();
             $table->timestamps();
         });
     }

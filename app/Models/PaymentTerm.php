@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentTerm whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class PaymentTerm extends Model
+class PaymentTerm extends ObjectiveModel
 {
     /**
      * The attributes that are mass assignable.
@@ -30,12 +30,12 @@ class PaymentTerm extends Model
     protected $fillable = [
         'name',
         'ordering',
-        'active',
+        'is_active',
     ];
 
     protected $table = 'payment_term';
 
     protected $casts = [
-        'active' => 'boolean',
+        'is_active' => 'boolean',
     ];
 }

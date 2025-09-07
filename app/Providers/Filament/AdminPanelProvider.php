@@ -10,6 +10,8 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
+use Filament\Support\Facades\FilamentView;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -54,6 +56,23 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop()
+            // Custom panel width
+            ->maxContentWidth(Width::FitContent)
+            // Custom Theme: https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme
+            ->viteTheme('resources/css/filament/theme.css')
+            ->sidebarWidth('14rem')
+            // Unsaved changes alerts https://filamentphp.com/docs/4.x/panel-configuration#unsaved-changes-alerts
+            ->unsavedChangesAlerts();
     }
+
+    public function boot(): void
+    {
+        // Load a Vite JS entry on all Filament panel pages so HMR/full reload works
+        FilamentView::registerRenderHook('panels::head.end', function () {
+            return view('partials.vite-client');
+        });
+    }
+
 }

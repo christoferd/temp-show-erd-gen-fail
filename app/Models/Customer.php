@@ -8,37 +8,40 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int $id
- * @property int|null $user_id
- * @property int|null $account_manager_user_id
- * @property string|null $abn
- * @property string|null $company_name
- * @property string|null $contact_name
- * @property string|null $phone_1
- * @property string|null $phone_2
- * @property string|null $website
- * @property string|null $brand_label
- * @property int|null $trade_term_id
- * @property int|null $payment_term_id
- * @property string|null $address_to
- * @property string|null $address_street1
- * @property string|null $address_street2
- * @property int|null $city_id
- * @property int|null $state_id
- * @property int|null $country_id
- * @property string|null $address_postcode
- * @property bool $active
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User|null $accountManager
- * @property-read \App\Models\City|null $city
- * @property-read \App\Models\Country|null $country
- * @property-read \App\Models\PaymentTerm|null $paymentTerm
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ShippingAddress> $shippingAddresses
- * @property-read int|null $shipping_addresses_count
- * @property-read \App\Models\State|null $state
- * @property-read \App\Models\TradeTerm|null $tradeTerm
- * @property-read \App\Models\User|null $user
+ * @property int                                                                           $id
+ * @property int|null                                                                      $user_id
+ * @property int|null                                                                      $account_manager_user_id
+ * @property string|null                                                                   $abn
+ * @property string|null                                                                   $company_name
+ * @property string|null                                                                   $first_name
+ * @property string|null                                                                   $last_name
+ * @property string|null                                                                   $phone_1
+ * @property string|null                                                                   $phone_2
+ * @property string|null                                                                   $website
+ * @property string|null                                                                   $brand_label
+ * @property int|null                                                                      $trade_term_id
+ * @property int|null                                                                      $payment_term_id
+ * @property string|null                                                                   $address_to
+ * @property string|null                                                                   $address_street1
+ * @property string|null                                                                   $address_street2
+ * @property int|null                                                                      $city_id
+ * @property int|null                                                                      $state_id
+ * @property int|null                                                                      $country_id
+ * @property string|null                                                                   $address_postcode
+ * @property bool                                                                          $active
+ * @property \Illuminate\Support\Carbon|null                                               $created_at
+ * @property \Illuminate\Support\Carbon|null                                               $updated_at
+ * @property-read \App\Models\User|null                                                    $accountManager
+ * @property-read \App\Models\Address|null                                                 $address
+ * @property-read \App\Models\City|null                                                    $city
+ * @property-read \App\Models\Country|null                                                 $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CustomerEmail> $customerEmails
+ * @property-read int|null                                                                 $customer_emails_count
+ * @property-read \App\Models\PaymentTerm|null                                             $paymentTerm
+ * @property-read int|null                                                                 $shipping_addresses_count
+ * @property-read \App\Models\State|null                                                   $state
+ * @property-read \App\Models\TradeTerm|null                                               $tradeTerm
+ * @property-read \App\Models\User|null                                                    $user
  * @method static \Database\Factories\CustomerFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer newQuery()
@@ -67,7 +70,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereWebsite($value)
  * @mixin \Eloquent
  */
-class Customer extends Model
+class Customer extends ObjectiveModel
 {
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
@@ -79,25 +82,22 @@ class Customer extends Model
         'account_manager_user_id',
         'abn',
         'company_name',
-        'contact_name',
+        'first_name',
+        'last_name',
         'phone_1',
         'phone_2',
         'website',
         'brand_label',
         'trade_term_id',
         'payment_term_id',
-        'address_to',
-        'address_street1',
-        'address_street2',
-        'city_id',
-        'state_id',
-        'country_id',
-        'address_postcode',
-        'active',
+        'address_id',
+        'shipping_addresses', // JSON,
+        'is_active',
     ];
 
     protected $casts = [
-        'active' => 'boolean',
+        'is_active'          => 'boolean',
+        'shipping_addresses' => 'array', // Stored as JSON
     ];
 
     /**
@@ -135,11 +135,11 @@ class Customer extends Model
     }
 
     /**
-     * @return HasMany
+     * @return BelongsTo
      */
-    public function shippingAddresses(): HasMany
+    public function address(): BelongsTo
     {
-        return $this->hasMany(ShippingAddress::class, 'customer_id', 'id');
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
     public function customerEmails(): HasMany
@@ -147,28 +147,9 @@ class Customer extends Model
         return $this->hasMany(CustomerEmail::class, 'customer_id', 'id');
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function city(): BelongsTo
+    public function shippingCities(): HasMany
     {
-        return $this->belongsTo(City::class, 'city_id', 'id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function state(): BelongsTo
-    {
-        return $this->belongsTo(State::class, 'state_id', 'id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->hasMany(City::class, 'shipping_addresses.city', 'id');
     }
 
     /**
@@ -186,6 +167,36 @@ class Customer extends Model
         {
             $this->save();
         }
+    }
+
+    /**
+     * Return the full name of the customer.
+     *
+     * @return string
+     */
+    public function fullName(): string
+    {
+        return trim(($this->first_name ?? '').' '.($this->last_name ?? ''));
+    }
+
+    public function getAddressSingleLineAttribute(): string
+    {
+        if($address = $this->address)
+        {
+            $parts = array_filter([
+                                      $address->address_to,
+                                      $address->address_street1,
+                                      $address->address_street2,
+                                      $address->city?->name,
+                                      $address->state?->name,
+                                      $address->country?->name,
+                                      $address->postcode
+                                  ]);
+
+            return implode(', ', $parts);
+        }
+
+        return '';
     }
 
 }

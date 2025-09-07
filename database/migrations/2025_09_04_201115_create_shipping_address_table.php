@@ -17,13 +17,13 @@ return new class extends Migration
             $table->foreignId('customer_id')->nullable()->constrained('customer');
             $table->foreignId('factory_id')->nullable()->constrained('factory');
             $table->string('address_to')->default('')->index();
-            $table->string('address_street1')->default('')->index();
-            $table->string('address_street2')->default('')->index();
+            $table->string('street1')->default('')->index();
+            $table->string('street2')->default('')->index();
             $table->foreignId('city_id')->nullable()->constrained('city');
             $table->foreignId('state_id')->nullable()->constrained('state');
             $table->foreignId('country_id')->nullable()->constrained('country');
             $table->string('postcode')->default('')->index();
-            $table->boolean('active')->default(true)->index();
+            $table->boolean('is_active')->default(true)->index();
             $table->boolean('is_default')->default(false)->index();
             $table->timestamps();
         });

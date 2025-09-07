@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TradeTerm whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class TradeTerm extends Model
+class TradeTerm extends ObjectiveModel
 {
     protected $table = 'trade_term';
 
@@ -32,10 +32,10 @@ class TradeTerm extends Model
     protected $fillable = [
         'name',
         'ordering',
-        'active',
+        'is_active',
     ];
 
     protected $casts = [
-        'active' => 'boolean',
+        'is_active' => 'boolean',
     ];
 }

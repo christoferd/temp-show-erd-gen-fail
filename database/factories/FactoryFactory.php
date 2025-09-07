@@ -26,14 +26,8 @@ class FactoryFactory extends Factory
             'phone_2' => fake()->optional()->phoneNumber()?:'',
             'email' => fake()->unique()->safeEmail(),
             'website' => fake()->optional()->url()?:'',
-            'address_to' => fake()->optional()->name()?:'',
-            'address_street1' => fake()->streetAddress(),
-            'address_street2' => fake()->optional()->secondaryAddress()?:'',
-            'city_id'          => City::inRandomOrder()->first()?->id,
-            'state_id'         => State::inRandomOrder()->first()?->id,
-            'country_id'       => 2,
-            'address_postcode' => fake()->postcode(),
-            'active' => fake()->boolean(85), // 85% chance of being active
+            'address_id' => null,
+            'is_active' => fake()->boolean(85), // 85% chance of being active
         ];
     }
 
@@ -43,7 +37,7 @@ class FactoryFactory extends Factory
     public function inactive(): static
     {
         return $this->state(fn (array $attributes) => [
-            'active' => false,
+            'is_active' => false,
         ]);
     }
 
@@ -53,7 +47,7 @@ class FactoryFactory extends Factory
     public function active(): static
     {
         return $this->state(fn (array $attributes) => [
-            'active' => true,
+            'is_active' => true,
         ]);
     }
 }

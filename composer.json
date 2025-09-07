@@ -18,6 +18,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",
         "beyondcode/laravel-er-diagram-generator": "^5.0",
+        "composer/composer": "^2.7",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
@@ -51,9 +52,7 @@
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:models -RW",
-            "@php artisan ide-helper:meta"
+            "App\\Support\\Composer\\LocalScripts::postUpdate"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

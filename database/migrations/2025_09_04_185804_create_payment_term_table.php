@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable()->default('')->index();
             $table->integer('ordering')->default(1)->index();
-            $table->boolean('active')->default(true)->index();
+            $table->boolean('is_active')->default(true)->index();
             $table->timestamps();
         });
     }

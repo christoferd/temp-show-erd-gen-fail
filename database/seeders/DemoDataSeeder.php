@@ -20,11 +20,7 @@ class DemoDataSeeder extends Seeder
     {
         \echoCLI('======= DemoDataSeeder =======');;
 
-        \echoCLI('Factory Demo Data...');
-
-        // Create some demo factories using the Factory factory
-        Factory::factory()->count(2)->create();
-
+        $this->call(FactorySeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(CustomerEmailSeeder::class);
 

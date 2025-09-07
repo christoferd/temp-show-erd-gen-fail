@@ -24,8 +24,8 @@ class CustomerEmailSeeder extends Seeder
             {
                 CustomerEmail::create([
                                           'customer_id' => $customer->id,
-                                          'name'        => fake()->name(),
-                                          'email'       => fake()->unique()->safeEmail(),
+                                          'name'        => ($i == 1 ? $customer->first_name : $customer->company_name),
+                                          'email'       => ($i == 1 ? $customer->user->email : fake()->email()),
                                       ]);
             }
         });

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class State extends Model
+class State extends ObjectiveModel
 {
     protected $table = 'state';
 

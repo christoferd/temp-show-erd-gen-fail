@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         \echoCLI('Seed Users Data...');
 
         $userConfigs = [
+            ['Chris', 'Chris', 'dev@example.com', 'dev@example.com', ['developer', 'admin']],
             ['Brook Wang', 'Brook', 'brook@cgsports.com.au', 'brook@cgsports.com.au', ['admin']],
             ['Joyce Yang', 'Joyce', 'admin@cgsports.com.au', 'admin@cgsports.com.au', ['bookkeeper']],
             ['Alan Zhu', 'Alan', 'alan@imagecell.biz', 'alan@imagecell.biz', ['account_manager']],
@@ -39,18 +40,17 @@ class UserSeeder extends Seeder
                                  'email'             => $userConfig[2],
                                  'email_verified_at' => now(),
                                  'password'          => bcrypt($userConfig[3]),
+                                 // Brook, Joyce in Australia
+                                 'timezone'          => ($i < 2 ? 'Australia/Sydney' : 'Asia/Shanghai'),
                              ]);
             $user->save();
 
             // Attach Staff record
             $staff = new Staff(['user_id' => $user->id, 'full_name_english' => $userConfig[0]]);
 
-            if($i < 2) {
-                // Brook, Joyce
-                $staff->timezone = 'Australia/Sydney';
-            }
-            else {
-                $staff->timezone = 'Asia/Shanghai';
+            // Assign Factory
+            if($i > 1)
+            {
                 $staff->factory_id = Factory::inRandomOrder()->first()?->id;
             }
 

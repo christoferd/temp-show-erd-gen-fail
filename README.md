@@ -38,3 +38,11 @@ Once generated, you can view your ERD diagram in the browser at:
 ```
 http://cgs-erp.local:8000/laravel2erd
 ```
+
+# Favicon
+
+https://www.favicon.cc/
+
+SVG stored in public/erp.svg
+
+HTML header code set in /views/partials/vite-client.blade.php

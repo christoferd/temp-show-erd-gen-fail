@@ -19,14 +19,8 @@ return new class extends Migration
             $table->string('phone_2')->default('');
             $table->string('email')->default('');
             $table->string('website')->default('');
-            $table->string('address_to')->default('');
-            $table->string('address_street1')->default('');
-            $table->string('address_street2')->default('');
-            $table->foreignId('city_id')->nullable()->constrained('city');
-            $table->foreignId('state_id')->nullable()->constrained('state');
-            $table->foreignId('country_id')->nullable()->constrained('country');
-            $table->string('address_postcode')->default('');
-            $table->boolean('active')->default(true)->index();
+            $table->foreignId('address_id')->nullable()->constrained('address');
+            $table->boolean('is_active')->default(true)->index();
             $table->timestamps();
         });
     }

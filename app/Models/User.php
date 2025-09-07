@@ -20,16 +20,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Customer|null $customer
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CustomerEmail> $customerEmails
- * @property-read int|null $customer_emails_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ShippingAddress> $shippingAddresses
- * @property-read int|null $shipping_addresses_count
  * @property-read \App\Models\Customer|null $staff
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -64,7 +60,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'active',
+        'is_active',
+        'timezone',
     ];
 
     /**
@@ -87,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
-            'active'            => 'boolean',
+            'is_active'            => 'boolean',
         ];
     }
 
@@ -98,7 +95,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function staff(): HasOne
     {
-        return $this->hasOne(Customer::class, 'user_id', 'id');
+        return $this->hasOne(Staff::class, 'user_id', 'id');
     }
 
 }

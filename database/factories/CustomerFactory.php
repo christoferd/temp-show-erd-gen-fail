@@ -28,7 +28,8 @@ class CustomerFactory extends Factory
             // abn
             'abn'                     => fake()->numberBetween(10000000000, 99999999999),
             'company_name'            => $company,
-            'contact_name'            => fake()->name(),
+            'first_name'              => fake()->firstName(),
+            'last_name'               => fake()->lastName(),
             'phone_1'                 => fake()->phoneNumber(),
             // second phone number only 50% of the time
             'phone_2'                 => (fake()->optional()->phoneNumber() ?: ''),
@@ -38,14 +39,9 @@ class CustomerFactory extends Factory
             'brand_label'             => $company,
             'trade_term_id'           => TradeTerm::inRandomOrder()->first()?->id,
             'payment_term_id'         => PaymentTerm::inRandomOrder()->first()?->id,
-            'address_to'              => $company,
-            'address_street1'         => fake()->streetAddress(),
-            'address_street2'         => (fake()->optional()->secondaryAddress() ?: ''),
-            'city_id'                 => City::inRandomOrder()->first()?->id,
-            'state_id'                => State::inRandomOrder()->first()?->id,
-            'country_id'              => 1, // Country::inRandomOrder()->first()?->id,
-            'address_postcode'        => fake()->numberBetween(1000, 9999),
-            'active'                  => true,
+            'address_id'              => null,
+            'shipping_addresses'      => null, // todo add 1 to 3 fake shipping addresses
+            'is_active'               => true,
         ];
     }
 }

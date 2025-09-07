@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Staff whereWechat($value)
  * @mixin \Eloquent
  */
-class Staff extends Model
+class Staff extends ObjectiveModel
 {
     protected $table = 'staff';
 
@@ -49,17 +49,16 @@ class Staff extends Model
     protected $fillable = [
         'user_id',
         'factory_id',
-        'timezone',
         'full_name_english',
         'full_name_china',
         'phone',
         'wechat',
         'qq',
-        'active',
+        'is_active',
     ];
 
     protected $casts = [
-        'active' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
